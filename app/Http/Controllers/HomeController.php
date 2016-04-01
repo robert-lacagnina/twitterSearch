@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\View;
 use App\IApiService as IApiService;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class HomeController extends Controller
 {
@@ -19,6 +20,12 @@ class HomeController extends Controller
 
 	public function index() {
 		return View::make('index');
+	}
+
+	public function search($searchString) {
+		$data = $this->twitterAPIService->search($searchString);
+
+		return JsonResponse::create($data);
 	}
 
 }
