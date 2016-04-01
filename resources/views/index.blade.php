@@ -12,7 +12,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
-    <body>
         <div class="container z-depth-2">
 
             <nav>
@@ -24,7 +23,7 @@
             <div class="row search-main">
                 <form class="col s6 offset-m1">
                     <div class="row">
-                        <div class="input-field ">
+                        <div class="input-field">
                             <label for="twitter-search">Search Twitter...</label>
                             <input id="twitter-search" type="text" />
                         </div>
