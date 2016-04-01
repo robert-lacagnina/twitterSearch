@@ -28,6 +28,22 @@ class Inspire extends Command
      */
     public function handle()
     {
-        $this->comment(PHP_EOL.Inspiring::quote().PHP_EOL);
+
+
+        $apiKey = env("TWITTER_API_KEY");
+        $apiSecret = env("TWITTER_API_SECRET");
+
+        echo $apiSecret;
+        echo $apiKey;
+
+
+        $encodedKey = urlencode($apiKey);
+
+        $bearerTokenCredentials = $encodedKey . ":" . $apiSecret;
+
+        $base64Credentials = base64_encode($bearerTokenCredentials);
+
+
+        //$this->comment($base64Credentials.PHP_EOL);
     }
 }

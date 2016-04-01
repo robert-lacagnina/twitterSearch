@@ -45,6 +45,7 @@ class TwitterAPIService implements IApiService {
 			"grant_type=client_credentials"
 			)->send();
 
+
 		$apiResponse = $this->guzzleHttpClient->get(self::API_URL . "arguments go here...")->send();
 
 		if($apiResponse->isSucessful) {
