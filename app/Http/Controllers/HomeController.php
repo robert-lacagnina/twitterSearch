@@ -13,19 +13,27 @@ class HomeController extends Controller
 {
 	private $twitterAPIService;
 
+	/*
+	 * Route: /
+	 *
+	 * */
 	public function __construct(IApiService $apiService) {
 		$this->twitterAPIService = $apiService;
 	}
 
-	public function index() {
+	public function Index() {
 		return View::make('index');
 	}
 
-	public function search() {
+	/*
+	 * Route: /search/{searchQuery}
+	 *
+	 * */
+	public function Search($searchQuery) {
 		
-		$data = $this->twitterAPIService->Search("donald trump");
+		$data = $this->twitterAPIService->Search($searchQuery);
 
-		//return JsonResponse::create($data);
+		return JsonResponse::create(json_encode($data));
 	}
 
 }

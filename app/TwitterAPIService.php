@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /*@Class
 This class encapsulates calling and authenticating with the Twitter API.
-It exposes one method, Search with abstracts the search api call and returns and array of tweet objeccts.
+It exposes one method, Search which abstracts the search api call and returns an array of tweet objects.
 */
 class TwitterAPIService implements IApiService {
 
