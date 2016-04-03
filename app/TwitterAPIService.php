@@ -23,7 +23,7 @@ class TwitterAPIService implements IApiService {
 
 	public function Search($searchQuery) {
 
-		$apiResults = $this->CallAPI(urlencode($searchQuery));
+		$apiResults = $this->CallAPI($searchQuery);
 
 		$tweetsArr = [];
 

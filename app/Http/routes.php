@@ -12,5 +12,5 @@
 */
 
 Route::get('/', "HomeController@Index");
-Route::get('/search/{searchQuery}', "HomeController@Search");
+Route::get('/search', "HomeController@Search");
 

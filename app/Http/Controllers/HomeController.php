@@ -25,11 +25,13 @@ class HomeController extends Controller {
 	}
 
 	/*
-	 * Route: GET /search/{searchQuery}
+	 * Route: GET /search
 	 *
 	 * */
-	public function Search($searchQuery) {
-		
+	public function Search(Request $request) {
+
+		$searchQuery = $request->input('q');
+
 		$data = $this->twitterAPIService->Search($searchQuery);
 
 		//reverse chronological order
