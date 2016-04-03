@@ -23,7 +23,7 @@ class HomeController extends Controller
 
 	public function search() {
 		
-		$data = $this->twitterAPIService->Search("dsfdsf");
+		$data = $this->twitterAPIService->Search("donald trump");
 
 		//return JsonResponse::create($data);
 	}

@@ -7,7 +7,8 @@ use Illuminate\Http\Exception\HttpResponseException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /*@Class
-This class takes in a string search query and returns an array of tweet objects.
+This class encapsulates calling and authenticating with the Twitter API.
+It exposes one method, Search with abstracts the search api call and returns and array of tweet objeccts.
 */
 class TwitterAPIService implements IApiService {
 
@@ -22,7 +23,20 @@ class TwitterAPIService implements IApiService {
 
 	public function Search($searchQuery) {
 
-		$tweetsArr = $this->CallAPI("q=" . urlencode($searchQuery));
+		$apiResults = $this->CallAPI(urlencode($searchQuery));
+
+		$tweetsArr = [];
+
+		foreach($apiResults['statuses'] as $status) {
+			
+			$newTweet = new Tweet();
+			
+			$newTweet->createdTimestamp = strtotime($status['created_at']);
+			$newTweet->handle = $status[''];
+			$newTweet->tweetText = $status['text'];
+
+			array_push($tweetsArr, $newTweet);
+		}
 
 		return $tweetsArr;
 	}
@@ -31,19 +45,17 @@ class TwitterAPIService implements IApiService {
 
 		$authArr = $this->authenticateAPI();
 
-		$apiResponse = $this->guzzleHttpClient->request('GET', self::API_URL . "?$queryString",
+		$apiResponse = $this->guzzleHttpClient->request('GET', self::API_URL . "?q=$queryString",
 			[
 				'headers' =>
 					[
 						'Authorization' => $authArr['token_type'] . ' ' . $authArr['access_token']
-					]
+					],
+				'http_errors' => false
 			]
 		);
 
-		echo $apiResponse->getBody()->getContents();
-
-		die;
-
+		return json_decode($apiResponse->getBody()->getContents(), true);
 	}
 
 	/**
@@ -75,6 +87,7 @@ class TwitterAPIService implements IApiService {
 		);
 
 		$authArr = json_decode($authResponse->getBody()->getContents(), true);
+
 		return $authArr;
 	}
 
