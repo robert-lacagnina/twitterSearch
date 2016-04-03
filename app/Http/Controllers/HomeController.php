@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\View;
 use App\IApiService as IApiService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-class HomeController extends Controller
-{
+class HomeController extends Controller {
 	private $twitterAPIService;
 
 	/*
@@ -41,5 +40,4 @@ class HomeController extends Controller
 
 		return JsonResponse::create($tweetsResponse);
 	}
-
 }

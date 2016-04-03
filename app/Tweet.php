@@ -9,8 +9,7 @@ class Tweet implements \JsonSerializable {
     public $handle;
     public $tweetText;
 
-    public function jsonSerialize()
-    {
+    public function jsonSerialize() {
         return
             [
                 'createdTimeStamp' => $this->createdTimestamp,
