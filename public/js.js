@@ -1,20 +1,28 @@
 $(document).ready(function () {
+    $('#submit-tweet-search').click(function () {
 
-    var $twitterSearch = $('twitter-search');
-    var searchQuery = $('twitter-search').val();
+        console.log(this);
+        console.log('clicked!');
 
-    $.get('/search/' + searchQuery, function (data) {
+        var $twitterSearch = $('#twitter-search');
+        var searchQuery = $twitterSearch.val();
 
-        //clear searchbox
-        $twitterSearch.val('');
+        console.log(searchQuery);
 
-        data.tweets.forEach(function (tweet) {
-            $('.search-results-tbody').append(
-                '<tr><td>' + tweet.handle +  '</td>' +
-                '<td>' + tweet.createTimeStamp + '</td>'
-                + '<td>' + tweet.tweetText + '</td></tr>');
+        $.get('/search/' + searchQuery, function (data) {
+
+            //remove all rows from the table
+            $('tr').remove();
+
+            //clear searchbox
+            $twitterSearch.val('');
+
+            data.tweets.forEach(function (tweet) {
+                $('.search-results-tbody').append(
+                    '<tr><td>' + tweet.handle +  '</td>' +
+                    '<td>' + tweet.createTimeStamp + '</td>'
+                    + '<td>' + tweet.tweetText + '</td></tr>');
+            });
         });
-
-        
     });
 });

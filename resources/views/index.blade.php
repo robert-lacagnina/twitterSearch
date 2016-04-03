@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col offset-s10"><button id="submit-tweet-search" class="blue waves-effect waves-light btn">Go!</button></div>
+                        <div class="col offset-s10"><a id="submit-tweet-search" class="blue waves-effect waves-light btn">Go!</a></div>
                     </div>
                 </form>
             </div>
@@ -45,7 +45,6 @@
                     </thead>
 
                     <tbody class="search-results-tbody">
-
                     </tbody>
                 </table>
             </div>
