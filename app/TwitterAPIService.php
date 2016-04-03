@@ -4,6 +4,7 @@ namespace App;
 
 use GuzzleHttp\Client;
 use Illuminate\Http\Exception\HttpResponseException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /*@Class
 This class takes in a string search query and returns an array of tweet objects.
@@ -21,11 +22,35 @@ class TwitterAPIService implements IApiService {
 
 	public function Search($searchQuery) {
 
-		$this->CallAPI();
+		$tweetsArr = $this->CallAPI("q=" . urlencode($searchQuery));
+
+		return $tweetsArr;
 	}
 
-	private function CallAPI() {
+	private function CallAPI($queryString) {
 
+		$authArr = $this->authenticateAPI();
+
+		$apiResponse = $this->guzzleHttpClient->request('GET', self::API_URL . "?$queryString",
+			[
+				'headers' =>
+					[
+						'Authorization' => $authArr['token_type'] . ' ' . $authArr['access_token']
+					]
+			]
+		);
+
+		echo $apiResponse->getBody()->getContents();
+
+		die;
+
+	}
+
+	/**
+	 * @return mixed
+	 */
+	private function authenticateAPI()
+	{
 		$apiKey = env("TWITTER_API_KEY");
 		$apiSecret = env("TWITTER_API_SECRET");
 
@@ -35,35 +60,22 @@ class TwitterAPIService implements IApiService {
 
 		$base64Credentials = base64_encode($bearerTokenCredentials);
 
-		$authRequest = $this->guzzleHttpClient->request(
-			'GET',
+		$authResponse = $this->guzzleHttpClient->request(
+			'POST',
 			self::API_AUTH_URL,
 			[
 				'headers' =>
-				[
-					'Authorization' => $base64Credentials,
-					'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'
-				],
-				'form_params' => ['grant_type' => 'client_credentials']
+					[
+						'Authorization' => 'Basic ' . $base64Credentials,
+						'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'
+					],
+				'form_params' => ['grant_type' => 'client_credentials'],
+				'http_errors' => false
 			]
 		);
 
-		var_dump($authRequest);
-
-		die;
-
-//		$apiResponse = $this->guzzleHttpClient->get(self::API_URL . "arguments go here...")->send();
-//
-//		if($apiResponse->isSucessful) {
-//			$responseArray = $apiResponse->json();
-//
-//			foreach($responseArray as $tweet) {
-//				//parse api response array and create object
-//			}
-//		}
-//		else {
-//			throw new HttpResponseException( $apiResponse );
-//		}
+		$authArr = json_decode($authResponse->getBody()->getContents(), true);
+		return $authArr;
 	}
 
 }
