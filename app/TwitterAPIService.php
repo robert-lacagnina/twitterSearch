@@ -32,7 +32,7 @@ class TwitterAPIService implements IApiService {
 			$newTweet = new Tweet();
 			
 			$newTweet->createdTimestamp = strtotime($status['created_at']);
-			$newTweet->handle = $status[''];
+			$newTweet->handle = "@" . $status['user']['screen_name'];
 			$newTweet->tweetText = $status['text'];
 
 			array_push($tweetsArr, $newTweet);
