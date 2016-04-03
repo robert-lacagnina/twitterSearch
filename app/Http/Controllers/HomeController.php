@@ -13,7 +13,7 @@ class HomeController extends Controller {
 	private $twitterAPIService;
 
 	/*
-	 * Route: /
+	 * Route: GET /
 	 *
 	 * */
 	public function __construct(IApiService $apiService) {
@@ -25,7 +25,7 @@ class HomeController extends Controller {
 	}
 
 	/*
-	 * Route: /search/{searchQuery}
+	 * Route: GET /search/{searchQuery}
 	 *
 	 * */
 	public function Search($searchQuery) {
