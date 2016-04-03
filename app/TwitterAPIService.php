@@ -19,11 +19,9 @@ class TwitterAPIService implements IApiService {
 		$this->guzzleHttpClient = $client;
 	}
 
-	public function Search( $searchQuery ) {
+	public function Search($searchQuery) {
 
-
-		//return an array of tweet objects
-		return array();
+		$this->CallAPI();
 	}
 
 	private function CallAPI() {
@@ -33,31 +31,39 @@ class TwitterAPIService implements IApiService {
 
 		$encodedKey = urlencode($apiKey);
 
-		$bearerTokenCredentials = $encodedKey . ":" . $apiSecret;
+		$bearerTokenCredentials = $encodedKey . ':' . $apiSecret;
 
 		$base64Credentials = base64_encode($bearerTokenCredentials);
 
-
-		//authenticate with Twitter API
-		$this->guzzleHttpClient->post(
+		$authRequest = $this->guzzleHttpClient->request(
+			'GET',
 			self::API_AUTH_URL,
-			array("Authorization" => $base64Credentials),
-			"grant_type=client_credentials"
-			)->send();
+			[
+				'headers' =>
+				[
+					'Authorization' => $base64Credentials,
+					'Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'
+				],
+				'form_params' => ['grant_type' => 'client_credentials']
+			]
+		);
 
+		var_dump($authRequest);
 
-		$apiResponse = $this->guzzleHttpClient->get(self::API_URL . "arguments go here...")->send();
+		die;
 
-		if($apiResponse->isSucessful) {
-			$responseArray = $apiResponse->json();
-
-			foreach($responseArray as $tweet) {
-				//parse api response array and create object
-			}
-		}
-		else {
-			throw new HttpResponseException( $apiResponse );
-		}
+//		$apiResponse = $this->guzzleHttpClient->get(self::API_URL . "arguments go here...")->send();
+//
+//		if($apiResponse->isSucessful) {
+//			$responseArray = $apiResponse->json();
+//
+//			foreach($responseArray as $tweet) {
+//				//parse api response array and create object
+//			}
+//		}
+//		else {
+//			throw new HttpResponseException( $apiResponse );
+//		}
 	}
 
 }

@@ -13,7 +13,6 @@ class HomeController extends Controller
 {
 	private $twitterAPIService;
 
-
 	public function __construct(IApiService $apiService) {
 		$this->twitterAPIService = $apiService;
 	}
@@ -22,10 +21,11 @@ class HomeController extends Controller
 		return View::make('index');
 	}
 
-	public function search($searchString) {
-		$data = $this->twitterAPIService->search($searchString);
+	public function search() {
+		
+		$data = $this->twitterAPIService->Search("dsfdsf");
 
-		return JsonResponse::create($data);
+		//return JsonResponse::create($data);
 	}
 
 }
