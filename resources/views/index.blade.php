@@ -44,12 +44,8 @@
                     </tr>
                     </thead>
 
-                    <tbody>
-                    <tr>
-                        <td>@blah</td>
-                        <td>12/12/2012 2:24PM</td>
-                        <td>Welcome to Fox News: Where "journalists" encourage politicians to dodge tough questions http://slnm.us/zAl2pZY </td>
-                    </tr>
+                    <tbody class="search-results-tbody">
+
                     </tbody>
                 </table>
             </div>
