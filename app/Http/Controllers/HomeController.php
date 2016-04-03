@@ -31,7 +31,15 @@ class HomeController extends Controller {
 	public function Search($searchQuery) {
 		
 		$data = $this->twitterAPIService->Search($searchQuery);
-		
+
+		//reverse chronological order
+		usort($data, function($a, $b) {
+			if($a->createdTimestamp == $b->createdTimestamp)
+				return 0;
+
+			return $a->createdTimestamp > $b->createdTimestamp ? -1 : 1;
+		});
+
 		$serializedData = array_map(function ($tweet) {
 			return $tweet->jsonSerialize();
 		}, $data);
