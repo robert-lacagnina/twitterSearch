@@ -34,10 +34,12 @@ class HomeController extends Controller
 		$data = $this->twitterAPIService->Search($searchQuery);
 		
 		$serializedData = array_map(function ($tweet) {
-			return $tweet->jsonSerialize;
+			return $tweet->jsonSerialize();
 		}, $data);
-		
-		return JsonResponse::create(json_encode($serializedData));
+
+		$tweetsResponse = ['tweets' => $serializedData];
+
+		return JsonResponse::create($tweetsResponse);
 	}
 
 }
